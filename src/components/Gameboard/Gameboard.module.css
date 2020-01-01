@@ -1,0 +1,88 @@
+.terrain {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #5fad65;
+  width: 576px;
+  height: 624px;
+  border: 1px solid #65c36d;
+  border-bottom: 0;
+  border-top: 0;
+  border-right: 0;
+  animation: terrainHover 2s infinite;
+  animation-direction: alternate-reverse;
+  place-content: flex-start;
+}
+
+.terrainShadow {
+  width: 576px;
+  height: 624px;
+  position: absolute;
+  background-color: rgb(22, 25, 31);
+  transform-origin: right bottom;
+  animation: terrainShadowHover 2s infinite;
+  animation-direction: alternate-reverse;
+}
+
+.terrainBottom {
+  width: 575px;
+  height: 48px;
+  position: absolute;
+  bottom: 0;
+  left: -1px;
+  background-color: #39693a;
+  border-top: 1px solid #65c36d;
+  border-right: 1px solid #39693a;
+  border-left: 1px solid #39693a;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(29, 32, 39);
+}
+
+.tile {
+  width: 48px;
+  height: 48px;
+  box-sizing: border-box;
+  border: 1px solid #57b75f;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  transition: background-color 0.1s ease, borderColor 0.1s ease;
+}
+
+.mapUnitsContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.playerUnitsContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@keyframes terrainHover {
+  0% {
+    transform: translate3d(460px, 80px, 0);
+  }
+  100% {
+    transform: translate3d(460px, 86px, 0);
+  }
+}
+
+@keyframes terrainShadowHover {
+  0% {
+    transform: translate3d(482px, 110px, 0) scale3d(0.99, 0.93, 1);
+  }
+  100% {
+    transform: translate3d(480px, 108px, 0) scale3d(1, 0.94, 1);
+  }
+}
