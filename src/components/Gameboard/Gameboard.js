@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import cx from "classnames";
 import { getPath } from "../../utils/mapHelpers";
 import { UNIT_TYPES } from "../../utils/unitTypes";
 import Unit from "../Unit/Unit";
@@ -33,7 +34,7 @@ function renderPlayerUnit(unit, key) {
   );
 }
 
-export default function Gameboard({ G, ctx, moves, events, isActive }) {
+export default function Gameboard({ G, ctx, moves, events, isActive, playerID }) {
   const [highlightedOptions, setHighlightedOptions] = useState({
     tiles: null,
     isValid: false,
@@ -109,12 +110,25 @@ export default function Gameboard({ G, ctx, moves, events, isActive }) {
 
   return (
     <div className={styles.backdrop}>
-      <div className={styles.terrainShadow}></div>
-      <div className={styles.terrain}>
-        {grid}
-        <div className={styles.terrainBottom}></div>
-        <div className={styles.mapUnitsContainer}>{mapUnits?.map(renderMapUnit)}</div>
-        <div className={styles.playerUnitsContainer}>{playerUnits?.map(renderPlayerUnit)}</div>
+      <h1
+        className={cx(styles.turnLabel, {
+          [styles.green]: isActive,
+          [styles.red]: !isActive && playerID !== null,
+          [styles.blue]: playerID === null
+        })}
+      >
+        {isActive && "Your Turn"}
+        {!isActive && playerID !== null && "Opponents Turn"}
+        {playerID === null && "Spectating"}
+      </h1>
+      <div>
+        <div className={styles.terrainShadow}></div>
+        <div className={styles.terrain}>
+          {grid}
+          <div className={styles.terrainBottom}></div>
+          <div className={styles.mapUnitsContainer}>{mapUnits?.map(renderMapUnit)}</div>
+          <div className={styles.playerUnitsContainer}>{playerUnits?.map(renderPlayerUnit)}</div>
+        </div>
       </div>
       {winner}
     </div>

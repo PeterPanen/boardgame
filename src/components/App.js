@@ -1,20 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Client } from "boardgame.io/react";
-import { SocketIO } from "boardgame.io/multiplayer";
 import ProtectedRoute from "../utils/ProtectedRoute";
 import Login from "./Login/Login";
 import Lobby from "./Lobby/Lobby";
-import Gameboard from "./Gameboard/Gameboard";
-import { TurnbasedGame } from "../gamelogic";
+import GameClient from "./GameClient";
 import "./App.css";
-
-const GameClient = Client({
-  game: TurnbasedGame,
-  board: Gameboard,
-  multiplayer: SocketIO({ server: "localhost:8000" }),
-  debug: false
-});
 
 export default () => (
   <Router>
@@ -22,9 +12,9 @@ export default () => (
       <Route path="/login">
         <Login />
       </Route>
-      <ProtectedRoute path="/game/:id">
-        <GameClient playerID="0" />
-      </ProtectedRoute>
+      <Route path="/game/:id">
+        <GameClient />
+      </Route>
       <ProtectedRoute path="/">
         <Lobby />
       </ProtectedRoute>

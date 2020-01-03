@@ -3,6 +3,7 @@ import styles from "./Unit.module.css";
 
 export default function Unit({ path, imageUrl, width, height, x, y }) {
   const [targetPosition, setTargetPosition] = useState({ x, y, isInMotion: false });
+  let timers = [];
 
   useEffect(() => {
     if (
@@ -14,13 +15,20 @@ export default function Unit({ path, imageUrl, width, height, x, y }) {
       path
         .slice(1)
         .forEach((pos, idx) =>
-          setTimeout(
-            () => setTargetPosition({ x: pos.x, y: pos.y, isInMotion: idx + 2 === path.length ? false : true }),
-            300 * (idx + 1)
+          timers.push(
+            setTimeout(
+              () => setTargetPosition({ x: pos.x, y: pos.y, isInMotion: idx + 2 === path.length ? false : true }),
+              300 * (idx + 1)
+            )
           )
         );
+      return function cleanup() {
+        timers.forEach(t => {
+          if (t) clearTimeout(t);
+        });
+      };
     }
-  }, [path, targetPosition.isInMotion, targetPosition.x, targetPosition.y]);
+  }, [x, y]);
 
   const style = {
     width,
