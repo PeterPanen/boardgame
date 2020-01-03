@@ -3,9 +3,10 @@ import { useCookies } from "react-cookie";
 import { withRouter } from "react-router";
 import styles from "./Lobby.module.css";
 
-const lobbyHost = `http://localhost:8000`;
+const lobbyHost = `http://${window.location.hostname}/gameapi`;
 
 export default withRouter(function Lobby({ match, location, history }) {
+  console.log(history);
   const [cookies, setCookie] = useCookies(["playerName", "myMatches"]);
   const [matches, setMatches] = useState([]);
 
