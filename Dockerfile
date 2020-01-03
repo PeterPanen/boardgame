@@ -20,4 +20,4 @@ LABEL traefik.second.port="3000"
 LABEL traefik.second.frontend.rule="Host:dominus.panen.ml"
 
 # Run app
-CMD ["pm2-runtime", "process.yml"]
+CMD ["pm2-runtime", "ecosystem.config.js"]
