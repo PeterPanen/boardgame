@@ -113,8 +113,8 @@ export default function Gameboard({ G, ctx, moves, events, isActive }) {
       <div className={styles.terrain}>
         {grid}
         <div className={styles.terrainBottom}></div>
-        <div className={styles.mapUnitsContainer}>{mapUnits && mapUnits.map(renderMapUnit)}</div>
-        <div className={styles.playerUnitsContainer}>{playerUnits && playerUnits.map(renderPlayerUnit)}</div>
+        <div className={styles.mapUnitsContainer}>{mapUnits?.map(renderMapUnit)}</div>
+        <div className={styles.playerUnitsContainer}>{playerUnits?.map(renderPlayerUnit)}</div>
       </div>
       {winner}
     </div>
