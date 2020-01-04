@@ -18,6 +18,8 @@ LABEL traefik.first.port="8000"
 LABEL traefik.first.frontend.rule="Host:dominus.panen.ml;PathPrefix:/gameapi;PathPrefixStrip:/gameapi"
 LABEL traefik.second.port="3000"
 LABEL traefik.second.frontend.rule="Host:dominus.panen.ml"
+LABEL traefik.third.port="8000"
+LABEL traefik.third.frontend.rule="Host:dominus.panen.ml;PathPrefix:/socket.io"
 
 # Run app
 CMD ["pm2-runtime", "ecosystem.config.js"]
