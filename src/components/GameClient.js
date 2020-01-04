@@ -9,7 +9,7 @@ import { TurnbasedGame } from "../gamelogic";
 const GameClient = Client({
   game: TurnbasedGame,
   board: Gameboard,
-  multiplayer: SocketIO({ server: `${window.location.hostname}/gameapi` }),
+  multiplayer: SocketIO({ server: `${window.location.hostname}` }),
   debug: false
 });
 
