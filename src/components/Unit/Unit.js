@@ -18,7 +18,7 @@ export default function Unit({ path, imageUrl, width, height, x, y }) {
           timers.push(
             setTimeout(
               () => setTargetPosition({ x: pos.x, y: pos.y, isInMotion: idx + 2 === path.length ? false : true }),
-              300 * (idx + 1)
+              300 * idx
             )
           )
         );
