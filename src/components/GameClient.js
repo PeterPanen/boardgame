@@ -6,10 +6,12 @@ import { useCookies } from "react-cookie";
 import Gameboard from "./Gameboard/Gameboard";
 import { TurnbasedGame } from "../gamelogic";
 
+const IS_DEV = process.env.NODE_ENV === "development";
+
 const GameClient = Client({
   game: TurnbasedGame,
   board: Gameboard,
-  multiplayer: SocketIO({ server: `${window.location.hostname}` }),
+  multiplayer: SocketIO({ server: IS_DEV ? `${window.location.hostname}:8000` : `${window.location.hostname}` }),
   debug: false
 });
 

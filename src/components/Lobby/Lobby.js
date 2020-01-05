@@ -25,7 +25,6 @@ export default withRouter(function Lobby({ match, location, history }) {
   async function fetchVersion() {
     const payload = await fetch(lobbyHost + "/version");
     const json = await payload.json();
-    console.log(json);
     setVersion(String(json.version));
   }
 

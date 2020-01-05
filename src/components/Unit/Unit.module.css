@@ -4,4 +4,19 @@
   top: 0;
   pointer-events: none;
   transition: transform 0.3s linear;
+  display: flex;
+  justify-content: center;
+}
+
+.name {
+  white-space: nowrap;
+  position: absolute;
+  color: white;
+  top: -28px;
+  background-color: #145b8e;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 14px;
+  border: 1px solid #0094ff;
+  opacity: 0.8;
 }

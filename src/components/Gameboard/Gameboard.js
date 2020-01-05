@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import cx from "classnames";
+import { withRouter } from "react-router";
 import { getPath } from "../../utils/mapHelpers";
 import { UNIT_TYPES } from "../../utils/unitTypes";
 import Unit from "../Unit/Unit";
 import styles from "./Gameboard.module.css";
+
+const IS_DEV = process.env.NODE_ENV === "development";
+
+const lobbyHost = IS_DEV ? `http://${window.location.hostname}:8000` : `http://${window.location.hostname}/gameapi`;
 
 function renderMapUnit(unit, key) {
   switch (unit.type) {
@@ -26,6 +31,7 @@ function renderPlayerUnit(unit, key) {
   return (
     <Unit
       {...unit}
+      type="player"
       key={key}
       width={48}
       height={48}
@@ -34,7 +40,7 @@ function renderPlayerUnit(unit, key) {
   );
 }
 
-export default function Gameboard({ G, ctx, moves, events, isActive, playerID }) {
+export default withRouter(function Gameboard({ G, ctx, moves, events, isActive, playerID, match }) {
   const [highlightedOptions, setHighlightedOptions] = useState({
     tiles: null,
     isValid: false,
@@ -42,8 +48,14 @@ export default function Gameboard({ G, ctx, moves, events, isActive, playerID })
     backgroundColor: "rgba(91, 255, 105, 0.4);"
   });
 
+  const [matchInfo, setMatchInfo] = useState(undefined);
+  useEffect(() => {
+    fetchMatch();
+  }, []);
+
   const { actionPoints, x: playerX, y: playerY } = G.playerUnits[ctx.currentPlayer];
   const { mapUnits, playerUnits } = G;
+  const players = playerUnits.map((p, idx) => ({ ...p, playerName: matchInfo?.players[idx].name }));
 
   function onClick(x, y) {
     if (!isActive) return;
@@ -80,6 +92,12 @@ export default function Gameboard({ G, ctx, moves, events, isActive, playerID })
       border: isValid ? "2px solid #5bff69" : "2px solid #d06868",
       backgroundColor: isValid ? "rgba(91, 255, 105, 0.4)" : "rgba(208, 104, 104, 0.4)"
     });
+  }
+
+  async function fetchMatch() {
+    const payload = await fetch(lobbyHost + `/games/TurnbasedGame/${match.params.id}`);
+    const json = await payload.json();
+    setMatchInfo(json);
   }
 
   let winner = "";
@@ -127,10 +145,10 @@ export default function Gameboard({ G, ctx, moves, events, isActive, playerID })
           {grid}
           <div className={styles.terrainBottom}></div>
           <div className={styles.mapUnitsContainer}>{mapUnits?.map(renderMapUnit)}</div>
-          <div className={styles.playerUnitsContainer}>{playerUnits?.map(renderPlayerUnit)}</div>
+          <div className={styles.playerUnitsContainer}>{players?.map(renderPlayerUnit)}</div>
         </div>
       </div>
       {winner}
     </div>
   );
-}
+});

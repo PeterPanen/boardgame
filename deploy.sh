@@ -19,5 +19,5 @@ else
   docker build -t panen/dominus:$pkg_version .
   docker stop dominus
   docker rm dominus
-  docker run -e BUILD_NUMBER=$pkg_version --name dominus -d panen/dominus:$pkg_version  
+  docker run --name dominus -d panen/dominus:$pkg_version  
 fi

@@ -1,8 +1,9 @@
 import { Server } from "boardgame.io/server";
 import Router from "koa-router";
 import { TurnbasedGame } from "./gamelogic";
+import pkgJson from "../package.json";
 
-const version = String(process.env.BUILD_NUMBER);
+const version = String(pkgJson.version);
 const router = new Router();
 const server = Server({ games: [TurnbasedGame] });
 

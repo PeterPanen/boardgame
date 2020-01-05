@@ -41,6 +41,7 @@ export const TurnbasedGame = {
       actionPoints: 6,
       maxActionPoints: 6,
       path: [],
+      ctx,
       ...playerStartPositionMap[idx]
     })),
     mapUnits: [

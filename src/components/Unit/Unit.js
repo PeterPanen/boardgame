@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Unit.module.css";
 
-export default function Unit({ path, imageUrl, width, height, x, y }) {
+export default function Unit({ type, path, imageUrl, width, height, x, y, playerName, ...rest }) {
   const [targetPosition, setTargetPosition] = useState({ x, y, isInMotion: false });
   let timers = [];
-
   useEffect(() => {
     if (
       path.length &&
@@ -36,5 +35,9 @@ export default function Unit({ path, imageUrl, width, height, x, y }) {
     backgroundImage: `url(${imageUrl})`,
     transform: `translate3d(${targetPosition.x * 48}px, ${targetPosition.y * 48 - 10}px, 0)`
   };
-  return <div className={styles.unit} style={style}></div>;
+  return (
+    <div className={styles.unit} style={style}>
+      {type === "player" && <div className={styles.name}>{playerName || "Empty Slot"}</div>}
+    </div>
+  );
 }
