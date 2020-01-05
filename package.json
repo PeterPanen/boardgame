@@ -1,6 +1,6 @@
 {
   "name": "turnbased",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "private": true,
   "dependencies": {
     "@koa/router": "^8.0.5",
