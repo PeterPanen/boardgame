@@ -3,6 +3,7 @@ import styles from "./Unit.module.css";
 
 export default function Unit({ type, path, imageUrl, width, height, x, y, playerName, ...rest }) {
   const [targetPosition, setTargetPosition] = useState({ x, y, isInMotion: false });
+  console.log(rest);
   let timers = [];
   useEffect(() => {
     if (
@@ -37,7 +38,12 @@ export default function Unit({ type, path, imageUrl, width, height, x, y, player
   };
   return (
     <div className={styles.unit} style={style}>
-      {type === "player" && <div className={styles.name}>{playerName || "Empty Slot"}</div>}
+      {type === "player" && (
+        <div className={styles.name}>
+          <div style={{ width: "20%" }} className={styles.healthbar}></div>
+          <span className={styles.nameText}>{playerName || "Empty Slot"}</span>
+        </div>
+      )}
     </div>
   );
 }

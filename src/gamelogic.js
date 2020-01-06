@@ -38,6 +38,7 @@ export const TurnbasedGame = {
     playerUnits: new Array(ctx.numPlayers).fill(null).map((val, idx) => ({
       name: `Player ${idx + 1}`,
       health: 100,
+      maxHealth: 100,
       actionPoints: 6,
       maxActionPoints: 6,
       path: [],

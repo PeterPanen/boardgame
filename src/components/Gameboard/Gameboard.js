@@ -45,12 +45,22 @@ export default withRouter(function Gameboard({ G, ctx, moves, events, isActive, 
     tiles: null,
     isValid: false,
     border: "2px solid #5bff69",
-    backgroundColor: "rgba(91, 255, 105, 0.4);"
+    backgroundColor: "rgba(91, 255, 105, 0.4);",
+    terrainPositionStyle: {
+      transform: "translate3d(0, -600px, 0)"
+    }
   });
 
   const [matchInfo, setMatchInfo] = useState(undefined);
   useEffect(() => {
     fetchMatch();
+    setTimeout(
+      () =>
+        setHighlightedOptions({
+          terrainPositionStyle: { transform: "translate3d(0, 0, 0)" }
+        }),
+      100
+    );
   }, []);
 
   const { actionPoints, x: playerX, y: playerY } = G.playerUnits[ctx.currentPlayer];
@@ -142,7 +152,7 @@ export default withRouter(function Gameboard({ G, ctx, moves, events, isActive, 
       </h1>
       <div>
         <div className={styles.terrainShadow}></div>
-        <div className={styles.terrain}>
+        <div style={highlightedOptions.terrainPositionStyle} className={styles.terrain}>
           {grid}
           <div className={styles.terrainBottom}></div>
           <div className={styles.mapUnitsContainer}>{mapUnits?.map(renderMapUnit)}</div>
