@@ -38,7 +38,7 @@ export default withRouter(function Lobby({ match, location, history }) {
     await fetch(`${lobbyHost}/games/TurnbasedGame/create`, {
       method: "POST",
       body: JSON.stringify({
-        numPlayers: 2
+        numPlayers: 3
       }),
       headers: {
         "Content-Type": "application/json"
