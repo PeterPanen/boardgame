@@ -46,21 +46,13 @@ export default withRouter(function Gameboard({ G, ctx, moves, events, isActive, 
     isValid: false,
     border: "2px solid #5bff69",
     backgroundColor: "rgba(91, 255, 105, 0.4);",
-    terrainPositionStyle: {
-      transform: "translate3d(0, -600px, 0)"
-    }
+    animationDone: false
   });
 
   const [matchInfo, setMatchInfo] = useState(undefined);
   useEffect(() => {
     fetchMatch();
-    setTimeout(
-      () =>
-        setHighlightedOptions({
-          terrainPositionStyle: { transform: "translate3d(0, 0, 0)" }
-        }),
-      100
-    );
+    setTimeout(() => setHighlightedOptions({ animationDone: true }), 600);
   }, []);
 
   const { actionPoints, x: playerX, y: playerY } = G.playerUnits[ctx.currentPlayer];
@@ -70,7 +62,7 @@ export default withRouter(function Gameboard({ G, ctx, moves, events, isActive, 
   function onClick(x, y) {
     if (!isActive) return;
     moves.clickCell(x, y);
-    setHighlightedOptions({ tiles: null });
+    setHighlightedOptions({ ...highlightedOptions, tiles: null });
   }
 
   function getDynamicStyle(x, y) {
@@ -97,6 +89,7 @@ export default withRouter(function Gameboard({ G, ctx, moves, events, isActive, 
     const path = getPath(G, playerX, playerY, x, y);
     const isValid = path ? path.slice(1).length <= actionPoints : false;
     setHighlightedOptions({
+      ...highlightedOptions,
       tiles: path,
       isValid,
       border: isValid ? "2px solid #5bff69" : "2px solid #d06868",
@@ -151,8 +144,16 @@ export default withRouter(function Gameboard({ G, ctx, moves, events, isActive, 
         {playerID === null && "Spectating"}
       </h1>
       <div>
-        <div className={styles.terrainShadow}></div>
-        <div style={highlightedOptions.terrainPositionStyle} className={styles.terrain}>
+        <div
+          className={`${styles.terrainShadow} ${
+            highlightedOptions.animationDone ? styles.shadowAnimationHover : styles.shadowAnimationEnter
+          }`}
+        ></div>
+        <div
+          className={`${styles.terrain} ${
+            highlightedOptions.animationDone ? styles.terrainAnimateHover : styles.terrainAnimationEnter
+          }`}
+        >
           {grid}
           <div className={styles.terrainBottom}></div>
           <div className={styles.mapUnitsContainer}>{mapUnits?.map(renderMapUnit)}</div>

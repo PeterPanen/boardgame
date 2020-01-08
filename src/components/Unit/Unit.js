@@ -3,7 +3,7 @@ import styles from "./Unit.module.css";
 
 export default function Unit({ type, path, imageUrl, width, height, x, y, playerName, ...rest }) {
   const [targetPosition, setTargetPosition] = useState({ x, y, isInMotion: false });
-  console.log(rest);
+
   let timers = [];
   useEffect(() => {
     if (
