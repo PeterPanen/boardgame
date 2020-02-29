@@ -37,7 +37,7 @@ export const TurnbasedGame = {
     mapHeight: 12,
     playerUnits: new Array(ctx.numPlayers).fill(null).map((val, idx) => ({
       name: `Player ${idx + 1}`,
-      health: 100,
+      health: 20,
       maxHealth: 100,
       actionPoints: 6,
       maxActionPoints: 6,
@@ -153,7 +153,7 @@ export const TurnbasedGame = {
           G.playerUnits[ctx.playerID].path = path;
           G.playerUnits[ctx.playerID].x = x;
           G.playerUnits[ctx.playerID].y = y;
-          ctx.events.endTurn();
+          G.playerUnits[ctx.playerID].actionPoints = actionPoints - path.slice(1).length;
         }
       }
     }

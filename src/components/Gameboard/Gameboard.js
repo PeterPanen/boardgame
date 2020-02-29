@@ -3,6 +3,7 @@ import cx from "classnames";
 import { withRouter } from "react-router";
 import { getPath } from "../../utils/mapHelpers";
 import { UNIT_TYPES } from "../../utils/unitTypes";
+import Sidebar from "../Sidebar/Sidebar";
 import Unit from "../Unit/Unit";
 import styles from "./Gameboard.module.css";
 
@@ -52,10 +53,10 @@ export default withRouter(function Gameboard({ G, ctx, moves, events, isActive, 
   const [matchInfo, setMatchInfo] = useState(undefined);
   useEffect(() => {
     fetchMatch();
-    setTimeout(() => setHighlightedOptions({ animationDone: true }), 600);
+    setTimeout(() => setHighlightedOptions({ ...highlightedOptions, animationDone: true }), 800);
   }, []);
 
-  const { actionPoints, x: playerX, y: playerY } = G.playerUnits[ctx.currentPlayer];
+  const currentPlayerUnit = G.playerUnits[ctx.currentPlayer];
   const { mapUnits, playerUnits } = G;
   const players = playerUnits.map((p, idx) => ({ ...p, playerName: matchInfo?.players[idx].name }));
 
@@ -86,8 +87,8 @@ export default withRouter(function Gameboard({ G, ctx, moves, events, isActive, 
 
   function onHover(x, y, e) {
     if (!isActive) return;
-    const path = getPath(G, playerX, playerY, x, y);
-    const isValid = path ? path.slice(1).length <= actionPoints : false;
+    const path = getPath(G, currentPlayerUnit.x, currentPlayerUnit.y, x, y);
+    const isValid = path ? path.slice(1).length <= currentPlayerUnit.actionPoints : false;
     setHighlightedOptions({
       ...highlightedOptions,
       tiles: path,
@@ -149,6 +150,7 @@ export default withRouter(function Gameboard({ G, ctx, moves, events, isActive, 
             highlightedOptions.animationDone ? styles.shadowAnimationHover : styles.shadowAnimationEnter
           }`}
         ></div>
+        <Sidebar currentPlayerUnit={currentPlayerUnit} onEndClick={() => events.endTurn()} />
         <div
           className={`${styles.terrain} ${
             highlightedOptions.animationDone ? styles.terrainAnimateHover : styles.terrainAnimationEnter

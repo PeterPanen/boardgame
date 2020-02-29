@@ -19,7 +19,7 @@ export default withRouter(function Login({ match, location, history }) {
     <div className={styles.container}>
       <div>Login</div>
       <form onSubmit={onSubmit}>
-        <input name="username" type="text" placeholder="Username" />
+        <input autoFocus name="username" type="text" placeholder="Username" />
         <button type="submit">Login</button>
       </form>
     </div>

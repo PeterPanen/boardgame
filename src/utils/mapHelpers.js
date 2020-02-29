@@ -2,6 +2,7 @@ import EasyStar from "easystarjs";
 
 const easystar = new EasyStar.js();
 easystar.enableSync();
+easystar.enableDiagonals();
 
 export const getPath = (G, fromX, fromY, toX, toY) => {
   let validPath = undefined;
