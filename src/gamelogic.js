@@ -1,5 +1,5 @@
 import { getPath } from "./utils/mapHelpers";
-import { UNIT_TYPES } from "./utils/unitTypes";
+import simple12x12Map from "./maps/simple12x12";
 
 /* // Return true if `cells` is in a winning configuration.
 function IsVictory(cells) {
@@ -33,11 +33,11 @@ const playerStartPositionMap = [
 export const TurnbasedGame = {
   name: "TurnbasedGame",
   setup: ctx => ({
-    mapWidth: 12,
-    mapHeight: 12,
+    mapWidth: simple12x12Map.width,
+    mapHeight: simple12x12Map.height,
     playerUnits: new Array(ctx.numPlayers).fill(null).map((val, idx) => ({
       name: `Player ${idx + 1}`,
-      health: 20,
+      health: 100,
       maxHealth: 100,
       actionPoints: 6,
       maxActionPoints: 6,
@@ -45,104 +45,7 @@ export const TurnbasedGame = {
       ctx,
       ...playerStartPositionMap[idx]
     })),
-    mapUnits: [
-      {
-        type: UNIT_TYPES.TREE,
-        name: "Tree",
-        fallen: false,
-        path: [],
-        x: 2,
-        y: 2
-      },
-      {
-        type: UNIT_TYPES.TREE,
-        name: "Tree",
-        fallen: false,
-        path: [],
-        x: 9,
-        y: 2
-      },
-      {
-        type: UNIT_TYPES.TREE,
-        name: "Tree",
-        fallen: false,
-        path: [],
-        x: 2,
-        y: 9
-      },
-      {
-        type: UNIT_TYPES.TREE,
-        name: "Tree",
-        fallen: false,
-        path: [],
-        x: 9,
-        y: 9
-      },
-      {
-        type: UNIT_TYPES.TREE,
-        name: "Tree",
-        fallen: false,
-        path: [],
-        x: 3,
-        y: 2
-      },
-      {
-        type: UNIT_TYPES.TREE,
-        name: "Tree",
-        fallen: false,
-        path: [],
-        x: 2,
-        y: 3
-      },
-      {
-        type: UNIT_TYPES.TREE,
-        name: "Tree",
-        fallen: false,
-        path: [],
-        x: 8,
-        y: 2
-      },
-      {
-        type: UNIT_TYPES.TREE,
-        name: "Tree",
-        fallen: false,
-        path: [],
-        x: 9,
-        y: 3
-      },
-      {
-        type: UNIT_TYPES.TREE,
-        name: "Tree",
-        fallen: false,
-        path: [],
-        x: 3,
-        y: 9
-      },
-      {
-        type: UNIT_TYPES.TREE,
-        name: "Tree",
-        fallen: false,
-        path: [],
-        x: 2,
-        y: 8
-      },
-      {
-        type: UNIT_TYPES.TREE,
-        name: "Tree",
-        fallen: false,
-        path: [],
-        x: 8,
-        y: 9
-      },
-      {
-        type: UNIT_TYPES.TREE,
-        name: "Tree",
-        fallen: false,
-        path: [],
-        x: 9,
-        y: 8
-      }
-    ]
+    mapUnits: simple12x12Map.units
   }),
   moves: {
     clickCell: (G, ctx, x, y) => {
